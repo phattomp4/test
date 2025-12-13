@@ -23,6 +23,9 @@ public class Product {
         this.soldQuantity = soldQuantity;
     }
 
+    public Product(int productID, int brandID, String name, String sku, String description, double originalPrice, double currentPrice, String imageURL, int stockQuantity, int soldQuantity) {
+    }
+
     // Getter methods (Cực kỳ quan trọng để JSP đọc được)
     public int getId() { return id; }
     public int getBrandId() { return brandId; }

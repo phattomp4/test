@@ -16,13 +16,19 @@ public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ProductDAO dao = new ProductDAO();
 
-        // Lấy danh sách sản phẩm
-        List<Product> list = dao.getNewArrivals();
+        // 1. Lấy dữ liệu
+        List<Product> listFeatured = dao.getFeaturedProducts();
+        List<Product> listMen = dao.getMenProducts();
+        List<Product> listWomen = dao.getWomenProducts();
+        List<Product> listLuxury = dao.getLuxuryProducts();
 
-        // Đẩy dữ liệu sang trang JSP với tên là "listP"
-        request.setAttribute("listP", list);
+        // 2. Đẩy dữ liệu sang JSP
+        request.setAttribute("listFeatured", listFeatured);
+        request.setAttribute("listMen", listMen);
+        request.setAttribute("listWomen", listWomen);
+        request.setAttribute("listLuxury", listLuxury);
 
-        // Chuyển hướng
+        // 3. Chuyển hướng
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 }
