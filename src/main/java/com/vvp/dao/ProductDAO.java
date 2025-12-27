@@ -27,10 +27,10 @@ public class ProductDAO {
         );
     }
 
-    // 1. Tab Nổi bật: Lấy Top 8 sản phẩm bán chạy nhất
     public List<Product> getFeaturedProducts() {
         List<Product> list = new ArrayList<>();
-        String query = "SELECT * FROM Products ORDER BY SoldQuantity DESC LIMIT 8";
+        // Lấy 8 sản phẩm mới nhất
+        String query = "SELECT * FROM Products ORDER BY CreatedAt DESC LIMIT 8";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
@@ -95,5 +95,32 @@ public class ProductDAO {
             e.printStackTrace();
         }
         return list;
+    }
+
+    public Product getProductById(int id) {
+        String query = "SELECT * FROM Products WHERE ProductID = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Product(
+                        rs.getInt("ProductID"),
+                        rs.getInt("BrandID"),
+                        rs.getString("Name"),
+                        rs.getString("SKU"),
+                        rs.getString("Description"), // Lưu ý thêm constructor nhận description nếu chưa có
+                        rs.getDouble("OriginalPrice"),
+                        rs.getDouble("CurrentPrice"),
+                        rs.getString("ImageURL"),
+                        rs.getInt("StockQuantity"),
+                        rs.getInt("SoldQuantity")
+                );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

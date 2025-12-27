@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +12,7 @@
     <link rel="stylesheet" href="assets/css/ProductCards.css">
     <link rel="stylesheet" href="assets/css/header.css">
     <link rel="stylesheet" href="assets/css/footer.css">
+
     <!-- Linking SwiperJS CSS-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
     <!-- Linking Font Awesome-->
@@ -32,7 +34,7 @@
 
         <!--Logo-->
         <div class="logo-container-header">
-            <a href="index.html" class="logo-header">
+            <a href="<c:url value="/index"/>" class="logo-header">
                 <h1 class="logo-text" style="font-weight: 900; font-size: 35px;">VVP</h1>
             </a>
         </div>
@@ -128,21 +130,27 @@
                 </li>
                 <!-- Gio hang -->
                 <li>
-                    <a href="login.html" class="action-icon cart-icon">
-                        <i class="fa-solid fa-bag-shopping"></i>
+                    <a href="cart?action=view">
+                        <i class="fa fa-shopping-cart"></i>
+                        <span>(${sessionScope.cart.size() != null ? sessionScope.cart.size() : 0})</span>
                     </a>
                 </li>
                 <!-- Yêu thích -->
                 <li>
-                    <a href="login.html" class="action-icon">
+                    <a href="login.jsp" class="action-icon">
                         <i class="fa-regular fa-heart"></i>
                     </a>
                 </li>
                 <!-- Nút đăng nhập -->
                 <li>
                     <div class="container-button-login" style="text-align:center">
-                        <a href="login.html" class="button button-login">
-                            <span style="color: #fff">Đăng nhập</span>
+                        <a href="<c:url value="/login"/>" class="button button-login">
+                            <c:if test="${user == null}">
+                                <span style="color: #fff">Đăng nhập</span>
+                            </c:if>
+                            <c:if test="${user != null}">
+                                <span style="color: red">${user.username}</span>
+                            </c:if>
                         </a>
                     </div>
 
@@ -184,6 +192,7 @@
 
 
 
+    <!-- com.Service-->
     <!-- Service-->
     <div class="service">
         <div class="icon-box">
